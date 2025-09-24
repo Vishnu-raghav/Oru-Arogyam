@@ -50,42 +50,4 @@ const workerSchema = new mongoose.Schema(
 );
 
 export const Worker = mongoose.model("Worker", workerSchema);
-import mongoose from "mongoose";
 
-const governmentSchema = new mongoose.Schema(
-  {
-    userId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true 
-    },
-
-    name: { type: String, required: true }, 
-    department: { type: String, default: "Health Department" }, 
-
-    email: { type: String, required: true, unique: true }, 
-    contactNumber: { type: String }, 
-
-  
-    notifications: [
-      {
-        message: String, 
-        targetType: { type: String, enum: ["Hospital", "Organization"] }, 
-        targetId: { type: mongoose.Schema.Types.ObjectId, refPath: "notifications.targetType" },
-        createdAt: { type: Date, default: Date.now },
-        status: { type: String, enum: ["Sent", "Pending"], default: "Sent" }
-      }
-    ],
-
-    analyticsCache: {
-      totalWorkers: { type: Number, default: 0 },
-      totalOrganizations: { type: Number, default: 0 },
-      totalHospitals: { type: Number, default: 0 },
-      highRiskWorkers: { type: Number, default: 0 }
-    }
-
-  },
-  { timestamps: true }
-);
-
-export const Government = mongoose.model("Government", governmentSchema);
